@@ -2,7 +2,7 @@
     <div class="sb-sidenav-menu">
         <div class="nav">
             <div class="sb-sidenav-menu-heading">Menu Utama</div>
-            <a class="nav-link" href="/dashboard">
+            <a class="nav-link" href="{{ route('dashboard') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Dashboard
             </a>
@@ -13,8 +13,8 @@
             </a>
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="/pengguna">Senarai Pengguna</a>
-                    <a class="nav-link" href="/pengguna/baru">Daftar Pengguna</a>
+                    <a class="nav-link" href="{{ route('pengguna.index') }}">Senarai Pengguna</a>
+                    <a class="nav-link" href="{{ route('pengguna.create') }}">Daftar Pengguna</a>
                 </nav>
             </div>
 
@@ -26,18 +26,18 @@
             </a>
             <div class="collapse" id="collapseAssets" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="/asset">Senarai Asset</a>
-                    <a class="nav-link" href="/asset/baru">Permohonan Baru</a>
+                    <a class="nav-link" href="{{ route('asset.index') }}">Senarai Asset</a>
+                    <a class="nav-link" href="{{ route('asset.create') }}">Permohonan Baru</a>
                 </nav>
             </div>
 
 
             <div class="sb-sidenav-menu-heading">Akaun</div>
-            <a class="nav-link" href="/profile">
+            <a class="nav-link" href="{{ route('profile.edit') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Profile
             </a>
-            <a class="nav-link" href="/logout">
+            <a class="nav-link" href="{{ route('logout') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Logout
             </a>

@@ -42,6 +42,26 @@
         <script src="<?php echo asset('/'); ?>sbadmin/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo asset('/'); ?>sbadmin/js/datatables-simple-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            @if (session('success'))
+                Swal.fire({
+                    title: 'Success!',
+                    text: '{{ session("success") }}',
+                    icon: 'success',
+                    confirmButtonText: 'Terima Kasih'
+                })
+
+            @elseif ($errors->any())
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Ada masalah pada borang',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+            @endif
+        </script>
     </body>
 </html>
 

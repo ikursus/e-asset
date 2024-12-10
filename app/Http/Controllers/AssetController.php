@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PenggunaController extends Controller
+class AssetController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pengguna.template-senarai');
+        return view('asset.template-senarai');
     }
 
     /**
@@ -19,7 +19,7 @@ class PenggunaController extends Controller
      */
     public function create()
     {
-        return view('pengguna.template-create');
+        return view('asset.template-create');
     }
 
     /**
@@ -27,17 +27,11 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nama' => 'required', // cara validation menerusi string
-            'email' => 'required|email',
-            'no_kp' => ['required', 'numeric', 'digits:12'],
-            'no_kakitangan' => ['required', 'string'],
-            'telefon' => ['required'], // cara validation menerusi array
-            'bahagian' => ['required', 'string'],
-            'status' => ['required', 'in:aktif,tidak_aktif'],
+        $request->validate([
+            'nama' => 'required',
+            'kuantiti' => 'required|numeric',
+            'status' => 'required'
         ]);
-
-        return redirect()->route('pengguna.index')->with('success', 'Rekod telah disimpan');
     }
 
     /**
@@ -45,7 +39,7 @@ class PenggunaController extends Controller
      */
     public function show(string $id)
     {
-        return 'Detail pengguna: ' . $id;
+        //
     }
 
     /**

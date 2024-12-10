@@ -3,17 +3,18 @@
 @section('page-content')
 <div class="container-fluid px-4">
     <h1 class="mt-4">
-        Pengguna
+        Akaun
     </h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Daftar Pengguna Baru</li>
+        <li class="breadcrumb-item active">Profile</li>
     </ol>
 
     <div class="row justify-content-center">
         <div class="col-md-12">
 
-            <form method="POST" action="{{ route('pengguna.store') }}">
+            <form method="POST" action="{{ route('profile.update') }}">
                 @csrf
+                @method('PATCH')
                 <div class="card">
                     <div class="card-body">
 
@@ -56,18 +57,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="status" class="form-label">Status</label>
-                                    <select class="form-select" name="status">
-                                        <option value="">Pilih Status</option>
-                                        <option value="aktif">Aktif</option>
-                                        <option value="tidak_aktif">Tidak Aktif</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Daftar</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
             </form>
