@@ -54,10 +54,7 @@ Route::post('/login', function() {
  // Halaman untuk paparan senarai pengguna
  Route::get('/pengguna', function() {
 
-    $html = '<h1>Senarai pengguna</h1>';
-    $html .= '<a href="/pengguna/baru">Tambah pengguna</a>';
-
-    return $html;
+    return view('pengguna.template-senarai');
 
  });
 

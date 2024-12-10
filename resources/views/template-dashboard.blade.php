@@ -1,6 +1,6 @@
 @extends('layouts.template-induk')
 
-
+@section('page-content')
 <div class="container-fluid px-4">
     <h1 class="mt-4">
         {{ $pageTitle }}
@@ -93,3 +93,4 @@
         </div>
     </div>
 </div>
+@endsection
