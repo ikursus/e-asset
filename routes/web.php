@@ -1,88 +1,40 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenggunaController;
 
-Route::get('/', function() {
+// Format routing Route::get(uri, action);
 
-    // Best practice nama template
-    // 1. Semua huruf kecil
-    // 2. tidak boleh ada space
-    // 3. Jika lebih daripada 1 perkataan, gunakan kebab-case
-    return view('template-homepage');
-});
+Route::get('/', [HomeController::class, 'homepage']);
+Route::get('/contact', [HomeController::class, 'contact']);
+
+Route::get('/dashboard', DashboardController::class);
 
 // Routing untuk memaparkan borang login (method GET)
-Route::get('/login', function() {
-
-    // Panggil template daripada resources/views/auth/template-login.php
-    return view('auth.template-login');
-
-});
+Route::get('/login', [LoginController::class, 'borangLogin']);
 // Routing untuk menerima data daripada borang login (method POST)
-Route::post('/login', function() {
-    // return 'Data telah diterima';
-    return redirect('/dashboard');
-});
+Route::post('/login', [LoginController::class, 'authenticate']);
 
 /*
  * Halaman pengguna
  */
 
- Route::get('/dashboard', function() {
+// // Halaman untuk paparan senarai pengguna
+// Route::get('/pengguna', [PenggunaController::class, 'index']);
+// // Halaman untuk paparan borang tambah pengguna
+// Route::get('/pengguna/baru', [PenggunaController::class, 'create']);
+// // Dapatkan data pengguna baru dan simpan di dalam database
+// Route::post('/pengguna', [PenggunaController::class, 'store']);
+// // Dapatkan detail pengguna berdasarkan ID
+// Route::get('/pengguna/{id}', [PenggunaController::class, 'show']);
+// // Paparkan borang kemaskini pengguna berdasarkan ID
+// Route::get('/pengguna/{id}/edit', [PenggunaController::class, 'edit']);
+// // Dapatkan data kemaskini pengguna berdasarkan ID dan update ke database
+// Route::patch('/pengguna/{id}', [PenggunaController::class, 'update']);
+// // Hapuskan pengguna berdasarkan ID
+// Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy']);
 
-    $pageTitle = '<h1>Dashboard</h1><script>alert("Anda telah dihack");</script>';
-
-    $senaraiAsset = [
-        ['id' => 1, 'nama' => 'Projector', 'kuantiti' => 3],
-        ['id' => 2, 'nama' => 'Laptop', 'kuantiti' => 4],
-        ['id' => 3, 'nama' => 'Monitor', 'kuantiti' => 2],
-        ['id' => 4, 'nama' => 'Printer', 'kuantiti' => 5],
-        ['id' => 5, 'nama' => 'Scanner', 'kuantiti' => 1]
-    ];
-
-    // Cara 1 Attach data (variable) kepada template - menggunakan with()
-    // return view('template-dashboard')->with('pageTitle', $pageTitle)->with('senaraiAsset', $senaraiAsset);
-
-    // Cara 2 Attach data (variable) kepada template - menggunakan array()
-    // return view('template-dashboard', ['pageTitle' => $pageTitle, 'senaraiAsset' => $senaraiAsset]);
-
-    // Cara 3 Attach data (variable) kepada template - menggunakan compact()
-    return view('template-dashboard', compact('pageTitle', 'senaraiAsset'));
-
- });
-
- // Halaman untuk paparan senarai pengguna
- Route::get('/pengguna', function() {
-
-    return view('pengguna.template-senarai');
-
- });
-
-// Halaman untuk paparan borang tambah pengguna
-Route::get('/pengguna/baru', function() {
-
-    return view('pengguna.template-create');
-
-});
-
-Route::post('/pengguna', function() {
-return 'Pengguna telah berjaya ditambah';
-});
-
-
-// Dapatkan detail pengguna berdasarkan ID
-Route::get('/pengguna/{id}', function ($id) {
-    return 'Detail pengguna: ' . $id;
-});
-
-Route::get('/groups/{group_id}/user/{user_id?}', function ($group_id, $user_id = NULL) {
-
-    if (is_null($user_id)) {
-        return 'Sila bekalkan ID pengguna';
-    }
-
-    return 'Group ID: ' . $group_id . ', User ID: ' . $user_id;
-
-})->where([
-    'group_id' => '[a-zA-Z0-9]+'
-]);
+Route::resource('pengguna', PenggunaController::class);
