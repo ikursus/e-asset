@@ -30,10 +30,7 @@ Route::post('/login', function() {
 
  Route::get('/dashboard', function() {
 
-    $html = '<h1>Dashboard</h1>';
-    $html .= '<a href="/pengguna">Senarai pengguna</a>';
-
-    return $html;
+    return view('template-dashboard');
 
  });
 
