@@ -30,7 +30,7 @@ Route::post('/login', function() {
 
  Route::get('/dashboard', function() {
 
-    $pageTitle = 'Dashboard';
+    $pageTitle = '<h1>Dashboard</h1><script>alert("Anda telah dihack");</script>';
 
     $senaraiAsset = [
         ['id' => 1, 'nama' => 'Projector', 'kuantiti' => 3],
