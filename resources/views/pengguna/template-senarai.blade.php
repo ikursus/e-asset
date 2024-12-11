@@ -27,10 +27,35 @@
                                 <th>ID</th>
                                 <th>NAME</th>
                                 <th>EMAIL</th>
+                                <th>BAHAGIAN</th>
+                                <th>NO. K/P</th>
+                                <th>NO. KAKITANGAN</th>
+                                <th>TELEFON</th>
+                                <th>STATUS</th>
+                                <th>TINDAKAN</th>
                             </tr>
                         </thead>
                         <tbody>
-
+                            @foreach ($senaraiPengguna as $pengguna)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $pengguna->name }}</td>
+                                <td>{{ $pengguna->email }}</td>
+                                <td>{{ $pengguna->bahagian_id }}</td>
+                                <td>{{ $pengguna->no_kp }}</td>
+                                <td>{{ $pengguna->no_kakitangan }}</td>
+                                <td>{{ $pengguna->telefon }}</td>
+                                <td>{{ $pengguna->status }}</td>
+                                <td>
+                                    <form action="{{ route('pengguna.destroy', $pengguna->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a href="{{ route('pengguna.edit', $pengguna->id) }}" class="btn btn-info">Edit</a>
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Confirm nak delete: {{ $pengguna->name }}?')">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

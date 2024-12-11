@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Bahagian;
 use Illuminate\Http\Request;
 
 class PenggunaController extends Controller
@@ -11,7 +13,12 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-        return view('pengguna.template-senarai');
+        // $senaraiPengguna = User::orderBy('id', 'desc')->get();
+        // $senaraiPengguna = User::latest()->get();
+        // $senaraiPengguna = User::all();
+        $senaraiPengguna = User::latest()->get();
+
+        return view('pengguna.template-senarai', compact('senaraiPengguna'));
     }
 
     /**
@@ -19,6 +26,10 @@ class PenggunaController extends Controller
      */
     public function create()
     {
+        $senaraiBahagian = Bahagian::all();
+
+        dd($senaraiBahagian);
+
         return view('pengguna.template-create');
     }
 
