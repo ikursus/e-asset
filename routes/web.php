@@ -37,9 +37,6 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 // // Hapuskan pengguna berdasarkan ID
 // Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
 
-
-
-
 Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard');

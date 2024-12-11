@@ -22,6 +22,9 @@
                                         <h3 class="text-center font-weight-light my-4">Login</h3>
                                     </div>
                                     <div class="card-body">
+
+                                        @include('layouts.template-alerts')
+
                                         <form method="POST" action="">
 
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
