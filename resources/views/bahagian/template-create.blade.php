@@ -20,7 +20,7 @@
                         @include('layouts.template-alerts')
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="nama" class="form-label">Nama Bahagian</label>
                                     <input type="text" class="form-control {{ $errors->has('nama') ? 'is-invalid' : NULL }}" name="nama" placeholder="Nama Bahagian">

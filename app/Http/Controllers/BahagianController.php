@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BahagianController extends Controller
 {
@@ -11,7 +12,9 @@ class BahagianController extends Controller
      */
     public function index()
     {
-        //
+        $senaraiBahagian = DB::table('bahagian')->orderBy('id', 'desc')->get();
+
+        return view('bahagian.template-senarai', compact('senaraiBahagian'));
     }
 
     /**
@@ -19,7 +22,7 @@ class BahagianController extends Controller
      */
     public function create()
     {
-        //
+        return view('bahagian.template-create');
     }
 
     /**
@@ -27,7 +30,13 @@ class BahagianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required'
+        ]);
+
+        DB::table('bahagian')->insert($data);
+
+        return redirect()->route('bahagian.index')->with('success', 'Rekod berjaya ditambah');
     }
 
     /**
@@ -43,7 +52,9 @@ class BahagianController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $bahagian = DB::table('bahagian')->where('id', $id)->firstOrFail();
+
+        return view('bahagian.template-edit', compact('bahagian'));
     }
 
     /**
@@ -51,7 +62,13 @@ class BahagianController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required'
+        ]);
+
+        DB::table('bahagian')->where('id', $id)->update($data);
+
+        return redirect()->route('bahagian.index')->with('success', 'Rekod berjaya dikemaskini');
     }
 
     /**
@@ -59,6 +76,8 @@ class BahagianController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('bahagian')->where('id', $id)->delete();
+
+        return redirect()->route('bahagian.index')->with('success', 'Rekod berjaya dipadam');
     }
 }

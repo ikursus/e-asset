@@ -13,7 +13,7 @@
         <div class="col-md-12">
 
             <div class="d-flex justify-content-end mb-3">
-                <a href="{{ route('asset.create') }}" class="btn btn-primary">Tambah Bahagian</a>
+                <a href="{{ route('bahagian.create') }}" class="btn btn-primary">Tambah Bahagian</a>
             </div>
 
             <div class="card mb-4">
@@ -31,7 +31,26 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($senaraiBahagian as $bahagian)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $bahagian->nama }}</td>
+                                <td>
+                                    <form method="POST" action="{{ route('bahagian.destroy', $bahagian->id) }}">
+                                        @csrf
+                                        @method('DELETE')
 
+                                        <a href="{{ route('bahagian.edit', $bahagian->id) }}" class="btn btn-info">Edit</a>
+
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Confirm nak delete: {{ $bahagian->nama }}?')">
+                                            Delete
+                                        </button>
+
+                                    </form>
+
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
