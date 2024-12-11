@@ -16,7 +16,7 @@ class BahagianSeeder extends Seeder
         // Sample Data Bahagian
         // Menggunakan Query Builder
         // DB::connection('mysql')->table('bahagian')->insert([]);
-        DB::table()->insert([
+        DB::table('bahagian')->insert([
             ['nama' => 'Khidmat Pengurusan'],
             ['nama' => 'Perkhidmatan Pameran dan Konservasi'],
             ['nama' => 'Media dan Pembangunan Seni'],

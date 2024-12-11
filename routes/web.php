@@ -13,14 +13,10 @@ use App\Http\Controllers\Auth\LoginController;
 Route::get('/', [HomeController::class, 'homepage'])->name('home');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
-Route::get('/dashboard', DashboardController::class)->name('dashboard');
-
 // Routing untuk memaparkan borang login (method GET)
 Route::get('/login', [LoginController::class, 'borangLogin'])->name('login');
 // Routing untuk menerima data daripada borang login (method POST)
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
-// Route untuk logout
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 /*
  * Halaman pengguna
@@ -41,8 +37,20 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 // // Hapuskan pengguna berdasarkan ID
 // Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
 
-Route::resource('pengguna', PenggunaController::class);
-Route::resource('asset', AssetController::class);
 
-Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+
+
+Route::group(['middleware' => 'auth'], function(){
+
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+
+    Route::resource('pengguna', PenggunaController::class);
+    Route::resource('asset', AssetController::class);
+
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Route untuk logout
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+});
