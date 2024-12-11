@@ -22,9 +22,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama</label>
-                                    <input type="text" class="form-control {{ $errors->has('nama') ? 'is-invalid' : NULL }}" name="nama" placeholder="Nama Lengkap">
-                                    @error('nama')
+                                    <label for="name" class="form-label">Nama</label>
+                                    <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : NULL }}" name="name" placeholder="Nama Lengkap">
+                                    @error('name')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -43,16 +43,16 @@
                                     <input type="text" class="form-control" name="no_kakitangan" placeholder="No. Kakitangan">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="telefon" class="form-label">Telefon</label>
-                                    <input type="text" class="form-control" name="telefon" placeholder="No. Telefon">
+                                    <label for="phone" class="form-label">Telefon</label>
+                                    <input type="text" class="form-control" name="phone" placeholder="No. Telefon">
                                 </div>
                                 <div class="mb-3">
                                     <label for="bahagian" class="form-label">Bahagian</label>
-                                    <select class="form-select" name="bahagian">
-                                        <option value="">Pilih Bahagian</option>
-                                        <option value="Bahagian A">Bahagian A</option>
-                                        <option value="Bahagian B">Bahagian B</option>
-                                        <option value="Bahagian C">Bahagian C</option>
+                                    <select class="form-select" name="bahagian_id">
+                                        <option value="">-- Pilih Bahagian --</option>
+                                        @foreach( $senaraiBahagian as $bahagian )
+                                        <option value="{{ $bahagian->id }}">{{ $bahagian->nama }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

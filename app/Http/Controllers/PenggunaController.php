@@ -28,9 +28,7 @@ class PenggunaController extends Controller
     {
         $senaraiBahagian = Bahagian::all();
 
-        dd($senaraiBahagian);
-
-        return view('pengguna.template-create');
+        return view('pengguna.template-create', compact('senaraiBahagian'));
     }
 
     /**
@@ -39,14 +37,30 @@ class PenggunaController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama' => 'required', // cara validation menerusi string
+            'name' => 'required', // cara validation menerusi string
             'email' => 'required|email',
             'no_kp' => ['required', 'numeric', 'digits:12'],
             'no_kakitangan' => ['required', 'string'],
-            'telefon' => ['required'], // cara validation menerusi array
-            'bahagian' => ['required', 'string'],
+            'phone' => ['required'], // cara validation menerusi array
+            'bahagian_id' => ['required', 'integer'],
             'status' => ['required', 'in:aktif,tidak_aktif'],
         ]);
+
+        // Cara 1 Simpan Data Menggunakan Model = new Object
+        // $user = new User();
+        // $user->name = $data['name']; // $request->input('name');
+        // $user->email = $data['email']; // $request->input('email');
+        // $user->no_kp = $data['no_kp']; // $request->no_kp;
+        // $user->password = bcrypt('pass123');
+        // $user->no_kakitangan = $data['no_kakitangan']; // $request->no_kakitangan;
+        // $user->phone = $data['phone'];
+        // $user->bahagian_id = $data['bahagian_id'];
+        // $user->status = $data['status'];
+        // $user->save();
+
+        // Cara 2 Simpan Data Menggunakan Model = method create()
+        $data['password'] = bcrypt('pass123');
+        User::create($data);
 
         return redirect()->route('pengguna.index')->with('success', 'Rekod telah disimpan');
     }
