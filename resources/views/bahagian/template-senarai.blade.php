@@ -25,7 +25,7 @@
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>BIL</th>
                                 <th>NAMA</th>
                                 <th>TINDAKAN</th>
                             </tr>
@@ -38,6 +38,7 @@
                                 <td>
                                     <form method="POST" action="{{ route('bahagian.destroy', $bahagian->id) }}">
                                         @csrf
+                                        <input type="hidden" name="_method" value="DELETE">
                                         @method('DELETE')
 
                                         <a href="{{ route('bahagian.edit', $bahagian->id) }}" class="btn btn-info">Edit</a>

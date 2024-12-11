@@ -12,6 +12,9 @@ class BahagianController extends Controller
      */
     public function index()
     {
+        // Query ke table bahagian menerusi Query Builder
+        // Ambil semua data daripada table bahagian
+        // Sorting latest id berada di atas, dan yang lama berada di belakang/bawah
         $senaraiBahagian = DB::table('bahagian')->orderBy('id', 'desc')->get();
 
         return view('bahagian.template-senarai', compact('senaraiBahagian'));
@@ -52,7 +55,8 @@ class BahagianController extends Controller
      */
     public function edit(string $id)
     {
-        $bahagian = DB::table('bahagian')->where('id', $id)->firstOrFail();
+        // Cari data bahagian berdasarkan ID
+        $bahagian = DB::table('bahagian')->where('id', '=', $id)->firstOrFail();
 
         return view('bahagian.template-edit', compact('bahagian'));
     }
@@ -62,12 +66,15 @@ class BahagianController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Validasi input field nama wajib diisi
         $data = $request->validate([
             'nama' => 'required'
         ]);
 
-        DB::table('bahagian')->where('id', $id)->update($data);
+        // Cari data bahagian berdasarkan ID dan update data
+        DB::table('bahagian')->where('id', '=', $id)->update($data);
 
+        // Bagi respon dengan redirect ke senarai bahagian beserta mesej success
         return redirect()->route('bahagian.index')->with('success', 'Rekod berjaya dikemaskini');
     }
 
@@ -76,8 +83,10 @@ class BahagianController extends Controller
      */
     public function destroy(string $id)
     {
+        // Cari data bahagian berdasarkan ID dan delete data
         DB::table('bahagian')->where('id', $id)->delete();
 
+        // Bagi respon dengan redirect ke senarai bahagian beserta mesej success
         return redirect()->route('bahagian.index')->with('success', 'Rekod berjaya dipadam');
     }
 }

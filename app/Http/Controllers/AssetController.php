@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AssetController extends Controller
 {
@@ -11,7 +12,9 @@ class AssetController extends Controller
      */
     public function index()
     {
-        return view('asset.template-senarai');
+        $senaraiAsset = DB::table('assets')->orderBy('nama', 'asc')->get();
+
+        return view('asset.template-senarai', compact('senaraiAsset'));
     }
 
     /**
@@ -27,11 +30,15 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'nama' => 'required',
             'kuantiti' => 'required|numeric',
             'status' => 'required'
         ]);
+
+        DB::table('assets')->insert($data);
+
+        return redirect()->route('asset.index')->with('success', 'Rekod berjaya ditambah');
     }
 
     /**
@@ -47,7 +54,10 @@ class AssetController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Dapatkan data asset berdasarkan ID
+        $asset = DB::table('assets')->where('id', '=', $id)->firstOrFail();
+
+        return view('asset.template-edit', compact('asset'));
     }
 
     /**
@@ -55,7 +65,15 @@ class AssetController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'nama' => 'required',
+            'kuantiti' => 'required|numeric',
+            'status' => 'required'
+        ]);
+
+        DB::table('assets')->where('id', '=', $id)->update($data);
+
+        return redirect()->route('asset.index')->with('success', 'Rekod berjaya dikemaskini');
     }
 
     /**
@@ -63,6 +81,8 @@ class AssetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('assets')->where('id', '=', $id)->delete();
+
+        return redirect()->route('asset.index')->with('success', 'Rekod berjaya dihapus');
     }
 }

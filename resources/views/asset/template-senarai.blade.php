@@ -33,7 +33,22 @@
                             </tr>
                         </thead>
                         <tbody>
-
+                            @foreach ($senaraiAsset as $asset)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $asset->nama }}</td>
+                                <td>{{ $asset->kuantiti }}</td>
+                                <td>{{ $asset->status }}</td>
+                                <td>
+                                    <a href="{{ route('asset.edit', $asset->id) }}" class="btn btn-info">Edit</a>
+                                    <form action="{{ route('asset.destroy', $asset->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Confirm nak delete: {{ $asset->nama }}?')">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
