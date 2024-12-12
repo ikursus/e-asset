@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Bahagian;
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PenggunaController extends Controller
 {
@@ -110,6 +113,18 @@ class PenggunaController extends Controller
             'status' => ['required', 'in:aktif,tidak_aktif'],
         ]);
 
+        if ($request->hasFile('gambar')) {
+
+            $request->validate([
+                'gambar' => ['mimes:jpg,jpeg,png', 'max:2048'],
+            ]);
+
+            $gambar = $request->file('gambar');
+            $gambarName = time() . '.' . $gambar->getClientOriginalExtension();
+            $gambar->move(public_path('uploaded/images'), $gambarName);
+            $data['gambar'] = $gambarName;
+        }
+
         $pengguna = User::findOrFail($id);
         $pengguna->update($data);
 
@@ -126,5 +141,18 @@ class PenggunaController extends Controller
         $pengguna->delete();
 
         return redirect()->route('pengguna.index')->with('success', 'Rekod berjaya dihapus');
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    public function pdf()
+    {
+        $senaraiPengguna = User::all();
+
+        $pdf = Pdf::loadView('pengguna.template-pdf', compact('senaraiPengguna') );
+        return $pdf->download('invoice.pdf');
     }
 }

@@ -13,7 +13,9 @@
         <div class="col-md-12">
 
             <div class="d-flex justify-content-end mb-3">
-                <a href="{{ route('pengguna.create') }}" class="btn btn-primary">Daftar Pengguna</a>
+                <a href="{{ route('pengguna.create') }}" class="btn btn-primary me-3">Daftar Pengguna</a>
+                <a href="{{ route('pengguna.export') }}" class="btn btn-warning me-3">Download Pengguna</a>
+                <a href="{{ route('pengguna.pdf') }}" class="btn btn-success">PDF Pengguna</a>
             </div>
             <div class="card mb-4">
                 <div class="card-header">

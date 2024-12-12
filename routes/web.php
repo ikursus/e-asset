@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
+    Route::get('pengguna/export', [PenggunaController::class, 'export'])->name('pengguna.export');
+    Route::get('pengguna/pdf', [PenggunaController::class, 'pdf'])->name('pengguna.pdf');
     Route::resource('pengguna', PenggunaController::class);
     Route::resource('asset', AssetController::class);
     Route::resource('bahagian', BahagianController::class);

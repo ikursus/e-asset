@@ -28,6 +28,7 @@ class User extends Authenticatable
         'phone',
         'bahagian_id',
         'status',
+        'gambar'
     ];
 
     /**

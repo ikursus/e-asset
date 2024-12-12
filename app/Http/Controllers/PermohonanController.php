@@ -15,7 +15,10 @@ class PermohonanController extends Controller
      */
     public function index()
     {
-        $senaraiPermohonan = Permohonan::with('permohonanItems')->latest()->get();
+        // $senaraiPermohonan = Permohonan::with(['permohonanItems' => function ($query) {
+        //     $query->with('asset');
+        // }])->latest()->get();
+        $senaraiPermohonan = Permohonan::with('permohonanItems.asset')->latest()->get();
 
         return view('permohonan.template-senarai', compact('senaraiPermohonan'));
     }

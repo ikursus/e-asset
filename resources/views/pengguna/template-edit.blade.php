@@ -12,11 +12,15 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
 
-            <form method="POST" action="{{ route('pengguna.update', $pengguna->id) }}">
+            <form method="POST" action="{{ route('pengguna.update', $pengguna->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <div class="card">
                     <div class="card-body">
+
+                        @if (!is_null($pengguna->gambar))
+                        <img src="{{ asset('uploaded/images') }}/{{ $pengguna->gambar }}" width="100">
+                        @endif
 
                         @include('layouts.template-alerts')
 
@@ -65,6 +69,12 @@
                                         <option value="aktif" {{ $pengguna->status == 'aktif' ? 'selected' : NULL }}>Aktif</option>
                                         <option value="tidak_aktif" {{ $pengguna->status == 'tidak_aktif' ? 'selected' : NULL }}>Tidak Aktif</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Gambar</label>
+                                    <input type="file" name="gambar" class="form-control">
                                 </div>
                             </div>
                         </div>
