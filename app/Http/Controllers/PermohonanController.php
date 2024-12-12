@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Asset;
 use App\Models\Permohonan;
 use Illuminate\Http\Request;
+use App\Models\PermohonanItem;
 
 class PermohonanController extends Controller
 {
@@ -69,7 +70,34 @@ class PermohonanController extends Controller
      */
     public function update(Request $request, Permohonan $permohonan)
     {
-        //
+        // Semak data tindakan permohonan
+        if ($request->tindakan_permohonan == 'tambah_asset')
+        {
+            $permohonanAsset = new PermohonanItem();
+            $permohonanAsset->permohonan_id = $permohonan->id;
+            $permohonanAsset->asset_id = $request->asset_id;
+            $permohonanAsset->kuantiti = $request->kuantiti;
+            $permohonanAsset->catatan = $request->catatan;
+            $permohonanAsset->save();
+
+            return redirect()->back()->with('success', 'Rekod Asset berjaya ditambah.');
+        }
+
+        if ($request->tindakan_permohonan == 'hantar_permohonan')
+        {
+            // Semak dulu jika permohonan ada rekod asset atau tidak?
+            if (PermohonanItem::where('permohonan_id', '=', $permohonan->id)->count() < 1)
+            {
+                return redirect()->back()->with('error', 'Permohonan tidak boleh dihantar tanpa asset.');
+            }
+
+            // Jika ada rekod asset, maka update status permohonan
+            $permohonan->update([
+                'status' => 'pending_approval',
+            ]);
+
+            return redirect()->back()->with('success', 'Permohonan berjaya dihantar dan menunggu approval.');
+        }
     }
 
     /**

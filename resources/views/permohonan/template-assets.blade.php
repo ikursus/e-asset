@@ -113,7 +113,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Tambah Asset</button>
+                                                        <button type="submit" class="btn btn-primary">Tambah Asset</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -167,7 +167,7 @@
                                             <form method="POST" action="{{ route('permohonan.update', $permohonan->id) }}">
                                                 @csrf
                                                 @method('PATCH')
-                                                <input type="hidden" name="tidakan_permohonan" value="hantar_permohonan">
+                                                <input type="hidden" name="tindakan_permohonan" value="hantar_permohonan">
                                                 <button type="submit" class="btn btn-primary" onclick="return confirm('Confirm submission permohonan?')">Hantar Permohonan</button>
                                             </form>
                                         </div>
