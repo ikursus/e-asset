@@ -57,8 +57,10 @@
                                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
 
-                                                <form method="POST" action="{{ route('permohonan.store') }}">
+                                                <form method="POST" action="{{ route('permohonan.update', $permohonan->id) }}">
                                                     @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="tindakan_permohonan" value="tambah_asset">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Asset</h1>
@@ -111,7 +113,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                        <button type="button" class="btn btn-primary">Tambah Asset</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -164,8 +166,9 @@
                                         <div class="d-flex justify-content-start">
                                             <form method="POST" action="{{ route('permohonan.update', $permohonan->id) }}">
                                                 @csrf
-                                                <input type="hidden" name="tidakan_permohonan" value="hantar">
-                                                <button type="submit" class="btn btn-primary">Hantar Permohonan</button>
+                                                @method('PATCH')
+                                                <input type="hidden" name="tidakan_permohonan" value="hantar_permohonan">
+                                                <button type="submit" class="btn btn-primary" onclick="return confirm('Confirm submission permohonan?')">Hantar Permohonan</button>
                                             </form>
                                         </div>
                                     </td>
