@@ -154,7 +154,7 @@
                             <tbody>
                                 @foreach ($permohonanAssets as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $item->nama_asset }}</td>
                                     <td>{{ $item->kuantiti }}</td>
                                     <td>{{ $item->catatan }}</td>
                                     <td>

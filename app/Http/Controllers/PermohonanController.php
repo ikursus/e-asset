@@ -6,6 +6,7 @@ use App\Models\Asset;
 use App\Models\Permohonan;
 use Illuminate\Http\Request;
 use App\Models\PermohonanItem;
+use Illuminate\Support\Facades\DB;
 
 class PermohonanController extends Controller
 {
@@ -55,7 +56,14 @@ class PermohonanController extends Controller
         $senaraiAsset = Asset::where('status', '=', 'available')->get();
 
         // Cara 1 panggil data daripada table permohonan item tanpa relation
-        $permohonanAssets = PermohonanItem::where('permohonan_id', '=', $permohonan->id)->get();
+        // $permohonanAssets = PermohonanItem::where('permohonan_id', '=', $permohonan->id)->get();
+
+        // Cara 2 panggil data daripada table permohonan item menerusi join table
+        $permohonanAssets = DB::table('permohonan_items')
+            ->join('assets', 'permohonan_items.asset_id', '=', 'assets.id')
+            ->where('permohonan_items.permohonan_id', '=', $permohonan->id)
+            ->select('permohonan_items.*', 'assets.nama as nama_asset')
+            ->get();
 
         return view('permohonan.template-assets', compact('permohonan', 'senaraiAsset', 'permohonanAssets'));
     }
