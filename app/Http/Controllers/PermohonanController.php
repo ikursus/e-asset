@@ -15,7 +15,9 @@ class PermohonanController extends Controller
      */
     public function index()
     {
-        //
+        $senaraiPermohonan = Permohonan::with('permohonanItems')->latest()->get();
+
+        return view('permohonan.template-senarai', compact('senaraiPermohonan'));
     }
 
     /**
@@ -59,11 +61,14 @@ class PermohonanController extends Controller
         // $permohonanAssets = PermohonanItem::where('permohonan_id', '=', $permohonan->id)->get();
 
         // Cara 2 panggil data daripada table permohonan item menerusi join table
-        $permohonanAssets = DB::table('permohonan_items')
-            ->join('assets', 'permohonan_items.asset_id', '=', 'assets.id')
-            ->where('permohonan_items.permohonan_id', '=', $permohonan->id)
-            ->select('permohonan_items.*', 'assets.nama as nama_asset')
-            ->get();
+        // $permohonanAssets = DB::table('permohonan_items')
+        //     ->join('assets', 'permohonan_items.asset_id', '=', 'assets.id')
+        //     ->where('permohonan_items.permohonan_id', '=', $permohonan->id)
+        //     ->select('permohonan_items.*', 'assets.nama as nama_asset')
+        //     ->get();
+
+        // Cara 3 panggil data daripada table permohonan menerusi relation model
+        $permohonanAssets = $permohonan->permohonanItems()->get();
 
         return view('permohonan.template-assets', compact('permohonan', 'senaraiAsset', 'permohonanAssets'));
     }

@@ -3,7 +3,7 @@
 @section('page-content')
 <div class="container-fluid px-4">
     <h1 class="mt-4">
-        Pilih Asset Permohonan
+        Permohonan Asset
     </h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">{{ $permohonan->kuantiti }}</li>
@@ -154,7 +154,7 @@
                             <tbody>
                                 @foreach ($permohonanAssets as $item)
                                 <tr>
-                                    <td>{{ $item->nama_asset }}</td>
+                                    <td>{{ $item->asset->nama}}</td>
                                     <td>{{ $item->kuantiti }}</td>
                                     <td>{{ $item->catatan }}</td>
                                     <td>

@@ -18,4 +18,10 @@ class Permohonan extends Model
         'tujuan',
         'tempat_digunakan'
     ];
+
+    public function permohonanItems()
+    {
+        // return $this->hasMany(PermohonanItem::class);
+        return $this->hasMany(PermohonanItem::class, 'permohonan_id', 'id');
+    }
 }

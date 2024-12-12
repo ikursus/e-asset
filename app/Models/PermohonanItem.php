@@ -14,4 +14,11 @@ class PermohonanItem extends Model
         'catatan',
         'status',
     ];
+
+    public function asset()
+    {
+        //return $this->belongsTo(Asset::class);
+        return $this->belongsTo(Asset::class, 'asset_id', 'id');
+
+    }
 }

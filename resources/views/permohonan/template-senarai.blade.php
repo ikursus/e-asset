@@ -3,52 +3,52 @@
 @section('page-content')
 <div class="container-fluid px-4">
     <h1 class="mt-4">
-        Bahagian
+        Permohonan
     </h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Daftar Bahagian Baru</li>
+        <li class="breadcrumb-item active">Senarai Permohonan</li>
     </ol>
 
     <div class="row justify-content-center">
         <div class="col-md-12">
 
             <div class="d-flex justify-content-end mb-3">
-                <a href="{{ route('bahagian.create') }}" class="btn btn-primary">Tambah Bahagian</a>
+                <a href="{{ route('permohonan.create') }}" class="btn btn-primary">Permohonan Baru</a>
             </div>
 
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    Senarai Bahagian
+                    Senarai Permohonan
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
                                 <th>BIL</th>
-                                <th>NAMA</th>
+                                <th>TUJUAN</th>
+                                <th>TEMPAT DIGUNAKAN</th>
+                                <th>TARIKH MULA PINJAM</th>
+                                <th>ASSET DIPINJAM</th>
                                 <th>TINDAKAN</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($senaraiBahagian as $bahagian)
+                            @foreach ($senaraiPermohonan as $permohonan)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $bahagian->nama }}</td>
+                                <td>{{ $permohonan->tujuan }}</td>
+                                <td>{{ $permohonan->tempat_digunakan }}</td>
+                                <td>{{ $permohonan->tarikh_mula }}</td>
                                 <td>
-                                    <form method="POST" action="{{ route('bahagian.destroy', $bahagian->id) }}">
-                                        @csrf
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        @method('DELETE')
-
-                                        <a href="{{ route('bahagian.edit', $bahagian->id) }}" class="btn btn-info">Edit</a>
-
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Confirm nak delete: {{ $bahagian->nama }}?')">
-                                            Delete
-                                        </button>
-
-                                    </form>
-
+                                    <ul>
+                                    @foreach ($permohonan->permohonanItems as $item)
+                                        <li>{{ $item->asset->nama }}</li>
+                                    @endforeach
+                                    </ul>
+                                </td>
+                                <td>
+                                    <a href="{{ route('permohonan.show', $permohonan->id) }}" class="btn btn-info">Detail</a
                                 </td>
                             </tr>
                             @endforeach
