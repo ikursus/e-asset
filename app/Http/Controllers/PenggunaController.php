@@ -38,7 +38,7 @@ class PenggunaController extends Controller
     {
         $data = $request->validate([
             'name' => 'required', // cara validation menerusi string
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'no_kp' => ['required', 'numeric', 'digits:12'],
             'no_kakitangan' => ['required', 'string'],
             'phone' => ['required'], // cara validation menerusi array
@@ -100,7 +100,20 @@ class PenggunaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required', // cara validation menerusi string
+            'email' => 'required|email|unique:users,email,' . $id,
+            'no_kp' => ['required', 'numeric', 'digits:12'],
+            'no_kakitangan' => ['required', 'string'],
+            'phone' => ['required'], // cara validation menerusi array
+            'bahagian_id' => ['required', 'integer'],
+            'status' => ['required', 'in:aktif,tidak_aktif'],
+        ]);
+
+        $pengguna = User::findOrFail($id);
+        $pengguna->update($data);
+
+        return redirect()->route('pengguna.index')->with('success', 'Rekod berjaya dikemaskini');
     }
 
     /**
@@ -108,6 +121,10 @@ class PenggunaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pengguna = User::findOrFail($id);
+
+        $pengguna->delete();
+
+        return redirect()->route('pengguna.index')->with('success', 'Rekod berjaya dihapus');
     }
 }
