@@ -35,15 +35,23 @@
                                     <td>Tempat Digunakan</td>
                                     <td>{{ $permohonan->tempat_digunakan }}</td>
                                 </tr>
+                                <tr>
+                                    <td>Status Permohonan</td>
+                                    <td>{{ $permohonan->status }}</td>
+                                </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="2">
 
+                                        @if ($permohonan->status == 'draft')
+
                                         <!-- Button trigger modal -->
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             Pilih Asset
                                         </button>
+
+                                        @endif
 
                                         <!-- Modal -->
                                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -149,6 +157,19 @@
                                     <td></td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="d-flex justify-content-start">
+                                            <form method="POST" action="{{ route('permohonan.update', $permohonan->id) }}">
+                                                @csrf
+                                                <input type="hidden" name="tidakan_permohonan" value="hantar">
+                                                <button type="submit" class="btn btn-primary">Hantar Permohonan</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
 
                         </table>
                     </div>
