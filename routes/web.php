@@ -1,13 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AssetController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\BahagianController;
-use App\Http\Controllers\PenggunaController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BahagianController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PermohonanController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 // Format routing Route::get(uri, action);
 
@@ -45,6 +46,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('pengguna', PenggunaController::class);
     Route::resource('asset', AssetController::class);
     Route::resource('bahagian', BahagianController::class);
+    Route::resource('permohonan', PermohonanController::class);
 
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
