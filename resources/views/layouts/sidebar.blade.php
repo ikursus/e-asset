@@ -31,7 +31,7 @@
                 </nav>
             </div>
 
-
+            @role('admin')
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAssets" aria-expanded="false" aria-controls="collapseAssets">
                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                 Asset
@@ -43,6 +43,7 @@
                     <a class="nav-link" href="{{ route('asset.create') }}">Permohonan Baru</a>
                 </nav>
             </div>
+            @endrole
 
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBahagian" aria-expanded="false" aria-controls="collapseBahagian">
                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
