@@ -20,7 +20,7 @@ class PermohonanController extends Controller
      */
     public function create()
     {
-        //
+        return view('permohonan.template-create');
     }
 
     /**
