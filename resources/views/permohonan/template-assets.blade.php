@@ -157,6 +157,7 @@
                                     <td></td>
                                 </tr>
                             </tbody>
+                            @if ($permohonan->status == 'draft')
                             <tfoot>
                                 <tr>
                                     <td colspan="4">
@@ -170,6 +171,7 @@
                                     </td>
                                 </tr>
                             </tfoot>
+                            @endif
 
                         </table>
                     </div>
