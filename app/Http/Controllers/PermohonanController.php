@@ -54,7 +54,10 @@ class PermohonanController extends Controller
         // Dapatkan senarai asset yang boleh dipinjam
         $senaraiAsset = Asset::where('status', '=', 'available')->get();
 
-        return view('permohonan.template-assets', compact('permohonan', 'senaraiAsset'));
+        // Cara 1 panggil data daripada table permohonan item tanpa relation
+        $permohonanAssets = PermohonanItem::where('permohonan_id', '=', $permohonan->id)->get();
+
+        return view('permohonan.template-assets', compact('permohonan', 'senaraiAsset', 'permohonanAssets'));
     }
 
     /**
@@ -103,8 +106,12 @@ class PermohonanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Permohonan $permohonan)
+    public function destroyAsset($id)
     {
-        //
+        $asset = PermohonanItem::findOrFail($id);
+
+        $asset->delete();
+
+        return redirect()->back()->with('success', 'Rekod Asset berjaya dihapuskan.');
     }
 }

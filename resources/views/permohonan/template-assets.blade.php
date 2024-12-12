@@ -152,12 +152,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($permohonanAssets as $item)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $item->kuantiti }}</td>
+                                    <td>{{ $item->catatan }}</td>
+                                    <td>
+                                        @if ($permohonan->status == 'draft')
+                                        <form action="{{ route('permohonan.asset.destroy', $item->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Confirm nak delete: {{ $asset->nama }}?')">Hapus</button>
+                                        </form>
+                                        @else
+                                        N/A
+                                        @endif
+                                    </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                             @if ($permohonan->status == 'draft')
                             <tfoot>

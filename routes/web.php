@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('pengguna', PenggunaController::class);
     Route::resource('asset', AssetController::class);
     Route::resource('bahagian', BahagianController::class);
+    Route::delete('permohonan-asset/{id}', [PermohonanController::class, 'destroyAsset'])->name('permohonan.asset.destroy');
     Route::resource('permohonan', PermohonanController::class);
 
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
