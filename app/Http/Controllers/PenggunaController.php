@@ -80,11 +80,18 @@ class PenggunaController extends Controller
     {
         $pengguna = User::find($id);
         // $pengguna = User::findOrFail($id);
+        // $pengguna = User::where('id', $id)->firstOrFail();
+        // $pengguna = User::where('id', $id)->first();
+        // $pengguna = User::where('status', 'aktif')->where('id', $id)->firstOrFail();
 
         if (! $pengguna) {
             // return 'Tiada pengguna menerusi ID: '. $id;
             return redirect()->route('pengguna.index')->with('error', 'Tiada pengguna menerusi ID: '. $id);
         }
+
+        $senaraiBahagian = Bahagian::all();
+
+        return view('pengguna.template-edit', compact('pengguna', 'senaraiBahagian'));
 
     }
 
