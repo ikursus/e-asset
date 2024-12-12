@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="tujuan" class="form-label">Tujuan Dipinjam</label>
+                                    <label for="tujuan" class="form-label">Tujuan Permohonan Pinjam Asset</label>
                                     <input type="text" class="form-control {{ $errors->has('tujuan') ? 'is-invalid' : NULL }}" name="tujuan" placeholder="Tujuan Dipinjam">
                                     @error('tujuan')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
@@ -34,8 +34,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <label for="tempat_digunakan" class="form-label">Tempat Digunakan</label>
-                                    <input type="text" class="form-control {{ $errors->has('tempat_digunakan') ? 'is-invalid' : NULL }}" name="tujuan" placeholder="Tempat Digunakan">
+                                    <label for="tempat_digunakan" class="form-label">Tempat Akan Digunakan</label>
+                                    <input type="text" class="form-control {{ $errors->has('tempat_digunakan') ? 'is-invalid' : NULL }}" name="tempat_digunakan" placeholder="Tempat Digunakan">
                                     @error('tempat_digunakan')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
@@ -43,7 +43,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Simpan & Seterusnya</button>
                     </div>
                 </div>
             </form>
