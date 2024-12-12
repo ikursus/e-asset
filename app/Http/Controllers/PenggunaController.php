@@ -78,7 +78,14 @@ class PenggunaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pengguna = User::find($id);
+        // $pengguna = User::findOrFail($id);
+
+        if (! $pengguna) {
+            // return 'Tiada pengguna menerusi ID: '. $id;
+            return redirect()->route('pengguna.index')->with('error', 'Tiada pengguna menerusi ID: '. $id);
+        }
+
     }
 
     /**
