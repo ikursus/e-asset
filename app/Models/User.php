@@ -55,4 +55,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the bahagian associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function bahagian()
+    {
+        return $this->belongsTo(Bahagian::class);
+    }
 }

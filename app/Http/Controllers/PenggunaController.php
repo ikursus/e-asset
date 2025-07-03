@@ -16,11 +16,7 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-        // $senaraiPengguna = User::orderBy('id', 'desc')->get();
-        // $senaraiPengguna = User::latest()->get();
-        // $senaraiPengguna = User::all();
-        $senaraiPengguna = User::latest()->get();
-
+        $senaraiPengguna = User::with('bahagian')->latest()->get();
         return view('pengguna.template-senarai', compact('senaraiPengguna'));
     }
 
@@ -30,7 +26,6 @@ class PenggunaController extends Controller
     public function create()
     {
         $senaraiBahagian = Bahagian::all();
-
         return view('pengguna.template-create', compact('senaraiBahagian'));
     }
 
@@ -40,32 +35,30 @@ class PenggunaController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required', // cara validation menerusi string
+            'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'no_kp' => ['required', 'numeric', 'digits:12'],
             'no_kakitangan' => ['required', 'string'],
-            'phone' => ['required'], // cara validation menerusi array
+            'phone' => ['required'],
             'bahagian_id' => ['required', 'integer'],
             'status' => ['required', 'in:aktif,tidak_aktif'],
+            'gambar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048']
         ]);
 
-        // Cara 1 Simpan Data Menggunakan Model = new Object
-        // $user = new User();
-        // $user->name = $data['name']; // $request->input('name');
-        // $user->email = $data['email']; // $request->input('email');
-        // $user->no_kp = $data['no_kp']; // $request->no_kp;
-        // $user->password = bcrypt('pass123');
-        // $user->no_kakitangan = $data['no_kakitangan']; // $request->no_kakitangan;
-        // $user->phone = $data['phone'];
-        // $user->bahagian_id = $data['bahagian_id'];
-        // $user->status = $data['status'];
-        // $user->save();
+        if ($request->hasFile('gambar')) {
+            $gambar = $request->file('gambar');
+            $gambarName = time() . '.' . $gambar->getClientOriginalExtension();
+            $gambar->move(public_path('uploaded/images'), $gambarName);
+            $data['gambar'] = $gambarName;
+        }
 
-        // Cara 2 Simpan Data Menggunakan Model = method create()
         $data['password'] = bcrypt('pass123');
-        User::create($data);
+        $user = User::create($data);
 
-        return redirect()->route('pengguna.index')->with('success', 'Rekod telah disimpan');
+        // Assign default role
+        $user->assignRole('user');
+
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna berjaya ditambah');
     }
 
     /**
@@ -73,7 +66,8 @@ class PenggunaController extends Controller
      */
     public function show(string $id)
     {
-        return 'Detail pengguna: ' . $id;
+        $pengguna = User::with('bahagian')->findOrFail($id);
+        return view('pengguna.template-show', compact('pengguna'));
     }
 
     /**
@@ -81,21 +75,9 @@ class PenggunaController extends Controller
      */
     public function edit(string $id)
     {
-        $pengguna = User::find($id);
-        // $pengguna = User::findOrFail($id);
-        // $pengguna = User::where('id', $id)->firstOrFail();
-        // $pengguna = User::where('id', $id)->first();
-        // $pengguna = User::where('status', 'aktif')->where('id', $id)->firstOrFail();
-
-        if (! $pengguna) {
-            // return 'Tiada pengguna menerusi ID: '. $id;
-            return redirect()->route('pengguna.index')->with('error', 'Tiada pengguna menerusi ID: '. $id);
-        }
-
+        $pengguna = User::findOrFail($id);
         $senaraiBahagian = Bahagian::all();
-
         return view('pengguna.template-edit', compact('pengguna', 'senaraiBahagian'));
-
     }
 
     /**
@@ -104,21 +86,17 @@ class PenggunaController extends Controller
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
-            'name' => 'required', // cara validation menerusi string
+            'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'no_kp' => ['required', 'numeric', 'digits:12'],
             'no_kakitangan' => ['required', 'string'],
-            'phone' => ['required'], // cara validation menerusi array
+            'phone' => ['required'],
             'bahagian_id' => ['required', 'integer'],
             'status' => ['required', 'in:aktif,tidak_aktif'],
+            'gambar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048']
         ]);
 
         if ($request->hasFile('gambar')) {
-
-            $request->validate([
-                'gambar' => ['mimes:jpg,jpeg,png', 'max:2048'],
-            ]);
-
             $gambar = $request->file('gambar');
             $gambarName = time() . '.' . $gambar->getClientOriginalExtension();
             $gambar->move(public_path('uploaded/images'), $gambarName);
@@ -128,7 +106,7 @@ class PenggunaController extends Controller
         $pengguna = User::findOrFail($id);
         $pengguna->update($data);
 
-        return redirect()->route('pengguna.index')->with('success', 'Rekod berjaya dikemaskini');
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna berjaya dikemaskini');
     }
 
     /**
@@ -137,22 +115,20 @@ class PenggunaController extends Controller
     public function destroy(string $id)
     {
         $pengguna = User::findOrFail($id);
-
         $pengguna->delete();
 
-        return redirect()->route('pengguna.index')->with('success', 'Rekod berjaya dihapus');
+        return redirect()->route('pengguna.index')->with('success', 'Pengguna berjaya dihapus');
     }
 
     public function export()
     {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return Excel::download(new UsersExport, 'senarai-pengguna.xlsx');
     }
 
     public function pdf()
     {
-        $senaraiPengguna = User::all();
-
-        $pdf = Pdf::loadView('pengguna.template-pdf', compact('senaraiPengguna') );
-        return $pdf->download('invoice.pdf');
+        $senaraiPengguna = User::with('bahagian')->get();
+        $pdf = Pdf::loadView('pengguna.template-pdf', compact('senaraiPengguna'));
+        return $pdf->download('senarai-pengguna.pdf');
     }
 }
